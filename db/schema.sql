@@ -4,10 +4,12 @@ DROP DATABASE IF EXISTS ecommerce_db;
 -- CREATE DATABASE
 CREATE DATABASE ecommerce_db;
 
+USE ecommerce_db;
+
 CREATE TABLE category (
   catID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  -- varchar, other options?
-  category_name VARCHAR(50) NOT NULL
+  category_name VARCHAR(50) NOT NULL,
+  ON DELETE CASCADE
 );
 
 CREATE TABLE product (
@@ -22,7 +24,8 @@ CREATE TABLE product (
 
 CREATE TABLE tag (
     tagID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    tag_name VARCHAR(100) NOT NULL
+    tag_name VARCHAR(100) NOT NULL,
+    ON DELETE CASCADE
 );
 
 CREATE TABLE productTag (
@@ -30,5 +33,6 @@ CREATE TABLE productTag (
     product_id INT
     FOREIGN KEY (proTagID) REFERENCES product(proID),
     tag_id INT
-    FOREIGN KEY (tag_id) REFERENCES tag(tagID)
+    FOREIGN KEY (tag_id) REFERENCES tag(tagID),
+    ON DELETE CASCADE
 );
