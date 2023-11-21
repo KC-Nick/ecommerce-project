@@ -56,7 +56,9 @@ router.put('/:id', (req, res) => {
   Category.update(
     {
       // All the fields you can update and the data attached to the request category
-      category_name: req.body.category_name,
+      category_name: req.body.category_name
+    },
+    {
       // Gets the category based on the id given in the request parameters
       where: {
         id: req.params.id,

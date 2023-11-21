@@ -15,3 +15,7 @@ If you would like to use the seeds, before starting the server use `npm seed`, o
 # Test
 
 A test video will be included, attached to the README in the Github repo.
+
+# Credits
+
+Credit for the starter code used to create this project goes to the Ohio State University Full Stack Development Bootcamp, the repository cloned can be found [Here](https://github.com/coding-boot-camp/fantastic-umbrella).

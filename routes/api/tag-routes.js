@@ -54,7 +54,9 @@ router.put('/:id', (req, res) => {
     Tag.update(
       {
         // All the fields you can update and the data attached to the request tag
-        tag_name: req.body.tag_name,
+        tag_name: req.body.tag_name
+      },
+      {
         // Gets the tag based on the id given in the request parameters
         where: {
           id: req.params.id,
