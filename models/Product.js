@@ -10,7 +10,7 @@ class Product extends Model {}
 Product.init(
   {
     // product model's coloumns
-    proID: {
+    id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       autoIncrement: true,
@@ -29,15 +29,15 @@ Product.init(
       allowNull: false,
       default: '10',
       validate: {
-      IsNumeric: true
+      isNumeric: true
       }
     },
-    //Is this right bc foreign key? Ask tutor
+
     category_id: {
       type: DataTypes.INTEGER,
       references: {
         model: 'category',
-        key: 'catID',
+        key: 'id',
         unique: false
       }
     }

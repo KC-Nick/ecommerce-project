@@ -8,23 +8,22 @@ router.get('/', async (req, res) => {
   // be sure to include its associated Product data
   try {
     const tagData = await Tag.findAll({
-      include: [{ model: Product, through: ProductTag,
-      as: 'product_tags' }]
+      include: [{ model: Product, through: ProductTag }]
      });
     res.status(200).json(tagData);
   } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 });
 
-router.get('/:tagID', async (req, res) => {
+router.get('/:id', async (req, res) => {
   // find a single tag by its `id`
   // be sure to include its associated Product data
   try {
-    const tagData = await Tag.findByPk(req.params.tagID, {
+    const tagData = await Tag.findByPk(req.params.id, {
         // JOIN with category, THROUGH tag
-        include: [{ model: Product, through: ProductTag,
-        as: 'tagID_products' }]
+        include: [{ model: Product, through: ProductTag }]
     });
 
     if (!tagData) {
@@ -50,17 +49,15 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:tagID', (req, res) => {
+router.put('/:id', (req, res) => {
   // update a tag's name by its `id` value
     Tag.update(
       {
         // All the fields you can update and the data attached to the request tag
-        tag_name: req.body.tag_name
-      },
-      {
+        tag_name: req.body.tag_name,
         // Gets the tag based on the id given in the request parameters
         where: {
-          tagID: req.params.tagID,
+          id: req.params.id,
         },
       }
     )
@@ -71,12 +68,12 @@ router.put('/:tagID', (req, res) => {
       .catch((err) => res.json(err));
 });
 
-router.delete('/:tagID', (req, res) => {
+router.delete('/:id', (req, res) => {
   // delete on tag by its `id` value
-      // Looks for the tags based on tagID given in the request parameters and deletes it
+      // Looks for the tags based on id given in the request parameters and deletes it
       Tag.destroy({
         where: {
-          tagID: req.params.tagID,
+          id: req.params.id
         },
       })
         .then((deletedTag) => {

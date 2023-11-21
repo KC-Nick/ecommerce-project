@@ -9,10 +9,8 @@ router.get('/', async (req, res) => {
   try {
     const categoryData = await Category.findAll(
       {
-        // JOIN with product, using .col to reference where the foreign key will join
-        //check this with tutor?
-        // include: [{ model: Product, where: { category_id: Sequelize.col('category.catID') },
-        // as: 'category_products' }]
+        //includes associated products
+        include: [Product]
       }
     );
     res.status(200).json(categoryData);
@@ -21,14 +19,13 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:catID', async (req, res) => {
+router.get('/:id', async (req, res) => {
   // find one category by its `id` value
   // be sure to include its associated Products
   try {
-    const categoryData = await Category.findByPk(req.params.catID, {
-        // JOIN with product, using .col to reference where the foreign key will join
-        include: [{ model: Product, where: { category_id: Sequelize.col('category.catID') },
-        as: 'category_products' }]
+    const categoryData = await Category.findByPk(req.params.id, {
+        // 
+        include: [{ model: Product, where: { id: req.params.id }}]
     });
 
     if (!categoryData) {
@@ -54,17 +51,15 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:catID', (req, res) => {
+router.put('/:id', (req, res) => {
   // update a category by its `id` value
   Category.update(
     {
       // All the fields you can update and the data attached to the request category
-      category_name: req.body.category_name
-    },
-    {
+      category_name: req.body.category_name,
       // Gets the category based on the id given in the request parameters
       where: {
-        catID: req.params.catID,
+        id: req.params.id,
       },
     }
   )
@@ -75,12 +70,12 @@ router.put('/:catID', (req, res) => {
     .catch((err) => res.json(err));
 });
 
-router.delete('/:catID', (req, res) => {
+router.delete('/:id', (req, res) => {
   // delete a category by its `id` value
-    // Looks for the categories based on catID given in the request parameters and deletes it
+    // Looks for the categories based on id given in the request parameters and deletes it
     Category.destroy({
       where: {
-        catID: req.params.catID,
+        id: req.params.id,
       },
     })
       .then((deletedCategory) => {
